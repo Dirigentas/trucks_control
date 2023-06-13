@@ -37,18 +37,15 @@ class TruckController extends Controller
     {
         $validated = $request->validate([
             'unit_number' => 'required|string|max:255',
-            'year' => 'required|integer|max:2028',
-            'notes' => 'string',
+            'year' => 'required|integer|between:1900,'. date('Y') + 5,
+            'notes' => 'nullable|string',
         ]);
- 
-        // $request->truck()->create($validated);
-        // $truck->update(['rating' => json_encode($rating)]);
-        // dump($validated);
-        // die;
 
         $truck->unit_number = $validated['unit_number'];
         $truck->year = $validated['year'];
-        $truck->notes = $validated['notes'];
+        if ($validated['notes'] == !null) {
+            $truck->notes = $validated['notes'];
+        }
         $truck->save();
  
         return redirect(route('trucks.index'));
@@ -67,15 +64,32 @@ class TruckController extends Controller
      */
     public function edit(Truck $truck)
     {
-        //
+        return view('trucks.edit', [
+            'truck' => $truck,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTruckRequest $request, Truck $truck)
+    public function update(Request $request, Truck $truck)
     {
-        //
+        $validated = $request->validate([
+            'unit_number' => 'required|string|max:255',
+            'year' => 'required|integer|between:1900,'. date('Y') + 5,
+            'notes' => 'nullable|string',
+        ]);
+ 
+        $truck->unit_number = $validated['unit_number'];
+        $truck->year = $validated['year'];
+        if ($validated['notes'] == !null) {
+            $truck->notes = $validated['notes'];
+        } else {
+            $truck->notes = '';
+        }
+        $truck->save();
+ 
+        return redirect(route('trucks.index'));
     }
 
     /**
@@ -83,6 +97,8 @@ class TruckController extends Controller
      */
     public function destroy(Truck $truck)
     {
-        //
+        $truck->delete();
+ 
+        return redirect(route('trucks.index'));
     }
 }

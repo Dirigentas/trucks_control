@@ -32,6 +32,4 @@ Route::middleware('auth')->group(function () {
 Route::resource('trucks', TruckController::class)
     ->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
 
-// Route::get('/counter', [TruckController::class, 'counter'])->name('counter');
-
 require __DIR__.'/auth.php';

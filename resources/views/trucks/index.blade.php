@@ -3,36 +3,34 @@
         <form method="POST" action="{{ route('trucks.store') }}">
             @csrf
             <label class="form-label block">Unit number</label>
-            <input required class="form-control form-control-lg mb-4" name="unit_number">
+            <input class="form-control form-control-lg mb-4 ps-4 block w-full" name="unit_number" value="{{ old('unit_number') }}">
 
             <label class="form-label block">Year</label>
-            <input required class="form-control form-control mb-4" name="year">
+            <input class="form-control form-control-lg mb-4 ps-4 block w-full" name="year" value="{{ old('year') }}">
 
             <label class="form-label block">Notes</label>
-            <textarea name="notes" placeholder="{{ __('For example: “Available for rent”.') }}" class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">{{ old('message') }}</textarea>
-            <x-input-error :messages="$errors->get('message')" class="mt-2" />
+            <textarea name="notes" placeholder="{{ __('For example: “Available for rent”.') }}" class="block w-full">{{ old('notes') }}</textarea>
+
+            <x-input-error :messages="$errors->get('unit_number')" class="mt-2" />
+            <x-input-error :messages="$errors->get('year')" class="mt-2" />
+            <x-input-error :messages="$errors->get('notes')" class="mt-2" />
+
             <x-primary-button class="mt-4">{{ __('Submit') }}</x-primary-button>
         </form>
 
         <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
             @foreach ($trucks as $truck)
             <div class="p-6 flex space-x-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 -scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                </svg>
                 <div class="flex-1">
                     <div class="flex justify-between items-center">
                         <div>
-                            {{-- <span class="text-gray-800">{{ $chirp->user->name }}</span> --}}
-                            {{-- <small class="ml-2 text-sm text-gray-600">{{ $chirp->created_at->format('j M Y, g:i a') }}</small> --}}
-
-                            {{-- @unless ($chirp->created_at->eq($chirp->updated_at)) --}}
+                            <span class="text-gray-800">Unit number: {{ $truck->unit_number }}</span>
+                            <small class="ml-2 text-sm text-gray-600">{{ $truck->created_at->format('Y M j, H:i') }}</small>
+                            @unless ($truck->created_at->eq($truck->updated_at))
                             <small class="text-sm text-gray-600"> &middot; {{ __('edited') }}</small>
-                            {{-- @endunless --}}
-
+                            @endunless
                         </div>
 
-                        {{-- @if ($chirp->user->is(auth()->user())) --}}
                         <x-dropdown>
                             <x-slot name="trigger">
                                 <button>
@@ -42,30 +40,25 @@
                                 </button>
                             </x-slot>
                             <x-slot name="content">
-                                {{-- <x-dropdown-link :href="route('chirps.edit', $chirp)">
+                                <x-dropdown-link :href="route('trucks.edit', $truck)">
                                     {{ __('Edit') }}
-                                </x-dropdown-link> --}}
-
-                                {{-- <form method="POST" action="{{ route('chirps.destroy', $chirp) }}">
-                                @csrf
-                                @method('delete')
-                                <x-dropdown-link :href="route('chirps.destroy', $chirp)" onclick="event.preventDefault(); this.closest('form').submit();">
-                                    {{ __('Delete') }}
                                 </x-dropdown-link>
-                                </form> --}}
 
+                                <form method="POST" action="{{ route('trucks.destroy', $truck) }}">
+                                    @csrf
+                                    @method('delete')
+                                    <x-dropdown-link :href="route('trucks.destroy', $truck)" onclick="event.preventDefault(); this.closest('form').submit();">
+                                        {{ __('Delete') }}
+                                    </x-dropdown-link>
+                                </form>
                             </x-slot>
                         </x-dropdown>
-                        {{-- @endif --}}
-
                     </div>
-                    <p class="mt-4 text-lg text-gray-900">Unit number: {{ $truck->unit_number }}</p>
                     <p class="mt-4 text-lg text-gray-900">Year: {{ $truck->year }}</p>
                     <p class="mt-4 text-lg text-gray-900">Notes: {{ $truck->notes }}</p>
                 </div>
             </div>
             @endforeach
         </div>
-
     </div>
 </x-app-layout>

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('unit_number', 255)->required();
             $table->integer('year')->required();
-            $table->text('notes');
+            $table->text('notes')->default('');
             $table->timestamps();
             // $table->foreignId('user_id')->constrained()->cascadeOnDelete();
         });
