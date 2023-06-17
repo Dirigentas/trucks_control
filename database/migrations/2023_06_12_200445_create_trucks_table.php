@@ -17,7 +17,6 @@ return new class extends Migration
             $table->integer('year')->required();
             $table->text('notes')->default('');
             $table->timestamps();
-            // $table->foreignId('user_id')->constrained()->cascadeOnDelete();
         });
     }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Truck;
+use App\Models\Truck_subunit;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -19,6 +20,7 @@ class TruckController extends Controller
     {
         return view('trucks.index', [
             'trucks' => Truck::latest()->get(),
+            'subunits' => Truck_subunit::all()
         ]);
     }
 

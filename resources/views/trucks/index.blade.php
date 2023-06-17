@@ -22,14 +22,11 @@
             @foreach ($trucks as $truck)
             <div class="p-6 flex space-x-2">
                 <div class="flex-1">
-                    <div class="flex justify-between items-center">
-                        <div>
-                            <span class="text-gray-800">Unit number: {{ $truck->unit_number }}</span>
-                            <small class="ml-2 text-sm text-gray-600">{{ $truck->created_at->format('Y M j, H:i') }}</small>
-                            @unless ($truck->created_at->eq($truck->updated_at))
-                            <small class="text-sm text-gray-600"> &middot; {{ __('edited') }}</small>
-                            @endunless
-                        </div>
+                    <div class='flex justify-between items-center'>
+                        <small class="ml-2 text-sm text-gray-600">{{ $truck->created_at->format('Y M j, H:i') }}</small>
+                        @unless ($truck->created_at->eq($truck->updated_at))
+                        <small class="text-sm text-gray-600"> &middot; {{ __('edited') }}</small>
+                        @endunless
 
                         <x-dropdown>
                             <x-slot name="trigger">
@@ -44,6 +41,10 @@
                                     {{ __('Edit') }}
                                 </x-dropdown-link>
 
+                                <x-dropdown-link :href="route('subunits.create', $truck)">
+                                    {{ __('Add Subunit') }}
+                                </x-dropdown-link>
+
                                 <form method="POST" action="{{ route('trucks.destroy', $truck) }}">
                                     @csrf
                                     @method('delete')
@@ -54,10 +55,40 @@
                             </x-slot>
                         </x-dropdown>
                     </div>
-                    <p class="mt-4 text-lg text-gray-900">Year: {{ $truck->year }}</p>
-                    <p class="mt-4 text-lg text-gray-900">Notes: {{ $truck->notes }}</p>
+
+
+                    <div class='row'>
+                        <div class="mt-1 text-lg text-gray-900 col-4">
+                            <div>Unit number:</div>
+                            <div>{{ $truck->unit_number }}</div>
+                        </div>
+                        <div class="mt-1 text-lg text-gray-900 col">
+                            <div>Year:</div>
+                            <div>{{ $truck->year }}</div>
+                        </div>
+                        <div class="mt-1 text-lg text-gray-900 col">
+                            <div>Notes:</div>
+                            <div>{{ $truck->notes }}</div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div>Subunits:</div>
+                    @foreach($subunits as $subunit)
+                    @if($subunit->main_truck_id === $truck->id)
+                    <div class='row'>
+                        <div class='col'>{{$subunit->main_truck}}</div>
+                        <div class='col'>{{$subunit->subunit}}</div>
+                        <div class='col'>{{$subunit->start_date}}</div>
+                        <div class='col'>{{$subunit->end_date}}</div>
+                    </div>
+                    @endif
+                    @endforeach
+
                 </div>
             </div>
+            <hr>
+            <hr>
+            <hr>
             @endforeach
         </div>
     </div>

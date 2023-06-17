@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TruckController;
+use App\Http\Controllers\TruckSubunitController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,5 +32,10 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('trucks', TruckController::class)
     ->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
+
+Route::get('/subunits/create{truck}', [TruckSubunitController::class, 'create'])->name('subunits.create');
+Route::post('/subunits/store{truck}', [TruckSubunitController::class, 'store'])->name('subunits.store');
+
+// Route::resource('subunits', TruckSubunitController::class);
 
 require __DIR__.'/auth.php';
