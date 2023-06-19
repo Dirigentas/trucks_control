@@ -74,7 +74,7 @@ class TruckSubunitController extends Controller
             $truckIsSubunitDatesArray = array_unique($truckIsSubunitDatesArray);
 
             // Pridedame validaciją
-            if (count(array_intersect($reqDatesArray, $truckIsSubunitDatesArray))) {
+            if (count(array_intersect($requestDatesArray, $truckIsSubunitDatesArray))) {
                 $validator->errors()->add('start_date', 'This truck is already a subunit of other truck');
             }
         });
