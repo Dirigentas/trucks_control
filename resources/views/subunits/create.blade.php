@@ -23,9 +23,10 @@
             <label class="form-label block">end date</label>
             <input class="form-control form-control-lg mb-4 ps-4 block w-full" type='date' name="end_date" value="{{ old('end_date') }}">
 
-            {{-- <x-input-error :messages="$errors->get('unit_number')" class="mt-2" />
-            <x-input-error :messages="$errors->get('year')" class="mt-2" />
-            <x-input-error :messages="$errors->get('notes')" class="mt-2" /> --}}
+            <x-input-error :messages="$errors->get('main_truck')" class="mt-2" />
+            <x-input-error :messages="$errors->get('subunit')" class="mt-2" />
+            <x-input-error :messages="$errors->get('start_date')" class="mt-2" />
+            <x-input-error :messages="$errors->get('end_date')" class="mt-2" />
             <div class="mt-4 space-x-2">
                 <x-primary-button>{{ __('Save') }}</x-primary-button>
                 <a href="{{ route('trucks.index') }}">{{ __('Cancel') }}</a>
