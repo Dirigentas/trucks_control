@@ -56,23 +56,28 @@
                         </x-dropdown>
                     </div>
 
-
                     <div class='row'>
                         <div class="mt-1 text-lg text-gray-900 col-4">
-                            <div>Unit number:</div>
+                            <div class='ml-2 text-sm text-gray-600'>Unit number:</div>
                             <div>{{ $truck->unit_number }}</div>
                         </div>
                         <div class="mt-1 text-lg text-gray-900 col">
-                            <div>Year:</div>
+                            <div class='ml-2 text-sm text-gray-600'>Year</div>
                             <div>{{ $truck->year }}</div>
                         </div>
                         <div class="mt-1 text-lg text-gray-900 col">
-                            <div>Notes:</div>
+                            <div class='ml-2 text-sm text-gray-600'>Notes</div>
                             <div>{{ $truck->notes }}</div>
                         </div>
                     </div>
                     <hr>
-                    <div>Subunits:</div>
+                    <div class='mt-3 mb-2'>Subunits:</div>
+                    <div class='row'>
+                        <div class='ml-2 text-sm text-gray-600 col'>Main Truck</div>
+                        <div class='ml-2 text-sm text-gray-600 col'>Subunit</div>
+                        <div class='ml-2 text-sm text-gray-600 col'>Start Date</div>
+                        <div class='ml-2 text-sm text-gray-600 col'>End Date</div>
+                    </div>
                     @foreach($truck->subunits as $subunit)
                     <div class='row'>
                         <div class='col'>{{$subunit->main_truck}}</div>
@@ -83,9 +88,7 @@
                     @endforeach
                 </div>
             </div>
-            <hr>
-            <hr>
-            <hr>
+            <div style='width: 100%; height: 20px; background-color: #F3F4F6'></div>
             @endforeach
         </div>
     </div>

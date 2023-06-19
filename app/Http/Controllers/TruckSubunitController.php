@@ -12,17 +12,7 @@ use Illuminate\Support\Facades\Validator;
 
 class TruckSubunitController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
+    
     public function create(Truck $truck): view
     {
         $trucks = Truck::all();
@@ -33,9 +23,7 @@ class TruckSubunitController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request, Truck_subunit $truck_subunit, Truck $truck): RedirectResponse
     {   
          $validator = Validator::make($request->all(), [
@@ -51,28 +39,24 @@ class TruckSubunitController extends Controller
                 // Gauname datų masyvą, su datomis, kuriomis pasirinktas truck'as jau turi Subunit'ą
             $truckHasSubunits = Truck_subunit::where('main_truck_id', $truck->id)->get();
             $truckHasSubunitsDatesArray = [];
-            foreach ($truckHasSubunits as $oneSubunit) {
-                $startDate = strtotime($oneSubunit->start_date);
-                $endDate = strtotime($oneSubunit->end_date);
-        
-                for ($currentDate = $startDate; $currentDate <= $endDate; $currentDate += (86400)) {
-                    $date = date('Y-m-d', $currentDate);
+            foreach ($truckHasSubunits as $oneSubunit) {    
+
+                for ($i = strtotime($oneSubunit->start_date); $i <= strtotime($oneSubunit->end_date); $i += (86400)) {
+                    $date = date('Y-m-d', $i);
                     $truckHasSubunitsDatesArray[] = $date;
                 };
             };
             $truckHasSubunitsDatesArray = array_unique($truckHasSubunitsDatesArray);
 
                 // Gauname datų masyvą, su datomis iš Form-data intervalo
-            $reqStartDate = strtotime($request->start_date);
-            $reqEndDate = strtotime($request->end_date);
             $reqDatesArray = [];
         
-            for ($currentDate = $reqStartDate; $currentDate <= $reqEndDate; $currentDate += (86400)) {
-                $date = date('Y-m-d', $currentDate);
-                $reqDatesArray[] = $date;
+            for ($i = strtotime($request->start_date); $i <= strtotime($request->end_date); $i += (86400)) {
+                $date = date('Y-m-d', $i);
+                $requestDatesArray[] = $date;
             };
                 // Pridedame validaciją
-            if (count(array_intersect($reqDatesArray, $truckHasSubunitsDatesArray))) {
+            if (count(array_intersect($requestDatesArray, $truckHasSubunitsDatesArray))) {
                 $validator->errors()->add('start_date', 'Subunit for this date interval already exists');
             }
 
@@ -81,11 +65,9 @@ class TruckSubunitController extends Controller
             $truckIsSubunitDatesArray = [];
 
             foreach ($truckIsSubunit as $oneSubunit) {
-                $startDate = strtotime($oneSubunit->start_date);
-                $endDate = strtotime($oneSubunit->end_date);
         
-                for ($currentDate = $startDate; $currentDate <= $endDate; $currentDate += (86400)) {
-                    $date = date('Y-m-d', $currentDate);
+                for ($i = strtotime($oneSubunit->start_date); $i <= strtotime($oneSubunit->end_date); $i += (86400)) {
+                    $date = date('Y-m-d', $i);
                     $truckIsSubunitDatesArray[] = $date;
                 };
             };
@@ -111,38 +93,5 @@ class TruckSubunitController extends Controller
         $truck_subunit->save();
  
         return redirect(route('trucks.index', $truck));
-    }
-
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Truck_subunit $truck_subunit)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Truck_subunit $truck_subunit)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Truck_subunit $truck_subunit)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Truck_subunit $truck_subunit)
-    {
-        //
     }
 }
