@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('start_date')->required();
             $table->date('end_date')->required();
             $table->timestamps();
-            $table->foreign('main_truck_id')->references('id')->on('trucks');
+            $table->foreign('main_truck_id')->references('id')->on('trucks')->cascadeOnDelete();
         });
     }
 

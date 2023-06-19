@@ -8,7 +8,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Response;
 
 
 class TruckController extends Controller
@@ -64,7 +63,7 @@ class TruckController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Truck $truck)
+    public function edit(Truck $truck): view
     {
         return view('trucks.edit', [
             'truck' => $truck,
@@ -74,7 +73,7 @@ class TruckController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Truck $truck)
+    public function update(Request $request, Truck $truck): RedirectResponse
     {
         $validated = $request->validate([
             'unit_number' => 'required|string|max:255',
@@ -97,7 +96,7 @@ class TruckController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Truck $truck)
+    public function destroy(Truck $truck): RedirectResponse
     {
         $truck->delete();
  

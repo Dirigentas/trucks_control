@@ -9,10 +9,10 @@
 
             <label class="form-label block">subunit</label>
             <select class="form-control form-control-lg mb-4 ps-4 block w-full" name='subunit'>
-                <option selected></option>
+                <option></option>
                 @foreach($trucks as $each_truck)
                 @if($each_truck->id !== $truck->id)
-                <option value="{{$each_truck->unit_number}}">{{$each_truck->unit_number}}</option>
+                <option value="{{$each_truck->unit_number}}" @if($each_truck->unit_number == old('subunit')) selected @endif>{{$each_truck->unit_number}}</option>
                 @endif
                 @endforeach
             </select>
