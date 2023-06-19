@@ -10,10 +10,8 @@ class Truck extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'unit_number',
-        'year',
-        'notes'
-    ];
-    
+    public function subunits(): HasMany
+    {
+        return $this->hasMany(Truck_subunit::class, 'main_truck_id', 'id');
+    }
 }

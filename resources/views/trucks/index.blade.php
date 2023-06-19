@@ -73,17 +73,14 @@
                     </div>
                     <hr>
                     <div>Subunits:</div>
-                    @foreach($subunits as $subunit)
-                    @if($subunit->main_truck_id === $truck->id)
+                    @foreach($truck->subunits as $subunit)
                     <div class='row'>
                         <div class='col'>{{$subunit->main_truck}}</div>
                         <div class='col'>{{$subunit->subunit}}</div>
                         <div class='col'>{{$subunit->start_date}}</div>
                         <div class='col'>{{$subunit->end_date}}</div>
                     </div>
-                    @endif
                     @endforeach
-
                 </div>
             </div>
             <hr>

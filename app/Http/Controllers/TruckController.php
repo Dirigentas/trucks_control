@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Truck;
-use App\Models\Truck_subunit;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -18,8 +17,7 @@ class TruckController extends Controller
     public function index(): view
     {
         return view('trucks.index', [
-            'trucks' => Truck::latest()->get(),
-            'subunits' => Truck_subunit::all()
+            'trucks' => Truck::with('subunits')->latest()->get(),
         ]);
     }
 
@@ -97,9 +95,9 @@ class TruckController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(Truck $truck): RedirectResponse
-    {
+    {       
         $truck->delete();
- 
+
         return redirect(route('trucks.index'));
     }
 }
