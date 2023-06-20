@@ -49,7 +49,7 @@ class TruckSubunitController extends Controller
             $truckHasSubunitsDatesArray = array_unique($truckHasSubunitsDatesArray);
 
                 // Gauname datų masyvą, su datomis iš Form-data intervalo
-            $reqDatesArray = [];
+            $requestDatesArray = [];
         
             for ($i = strtotime($request->start_date); $i <= strtotime($request->end_date); $i += (86400)) {
                 $date = date('Y-m-d', $i);
